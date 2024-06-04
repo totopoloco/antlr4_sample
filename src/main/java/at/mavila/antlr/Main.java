@@ -12,14 +12,17 @@ public class Main {
   public static void main(String... args) {
     log.info("Running the example...");
 
-    ExprLexer lexer = new ExprLexer(CharStreams.fromString("10+20*30"));
+    ExprLexer lexer = new ExprLexer(CharStreams.fromString("""
+        10+20*30
+        
+        """));
 
     CommonTokenStream tokens = new CommonTokenStream(lexer);
     ExprParser parser = new ExprParser(tokens);
     ParseTree parseTree = parser.expr();
 
     ParseTreeWalker walker = new ParseTreeWalker();
-    final ExprBaseListener listener = new MyListener();
+    final ExprListener listener = new MyListener();
     walker.walk(listener, parseTree);
   }
 }
